@@ -1,3 +1,10 @@
 {
-  "extends": "@react-native/typescript-config/tsconfig.json"
+  "extends": "@react-native/typescript-config/tsconfig.json",
+  "compilerOptions": {
+    "lib": [
+      "ESNext.Array",
+      "DOM",
+      "ESNext"
+    ]
+  }
 }
