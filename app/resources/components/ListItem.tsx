@@ -4,7 +4,13 @@ import { StyleSheet, Text, View } from 'react-native';
 import TickSymbol from '../svg/TickSymbol.tsx';
 import React from 'react';
 
-export function ListItem({ item, theme, onPress }: { item: ProductType; theme: ThemeType; onPress?: any }) {
+type PropTypes = {
+    item: ProductType;
+    theme: ThemeType;
+    onPress?: any;
+};
+
+export function ListItem({ item, theme, onPress }: PropTypes) {
     return (
         <View style={{ ...styles.items, borderColor: theme.text }}>
             <Text style={{ ...styles.itemText, color: theme.text }} allowFontScaling={false} numberOfLines={1}>

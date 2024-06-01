@@ -10,16 +10,19 @@ import { AddItemModal } from '../resources/components/AddItemModal.tsx';
 
 export default function Einkaufsliste() {
     const { theme } = useContext(ThemeContext);
-    const { products, addProduct } = useContext(DataContext);
+    const { products, addProduct, removeProduct } = useContext(DataContext);
 
     const [visible, setVisible] = useState(false);
 
     return (
         <SafeAreaView style={{ ...styles.container, backgroundColor: theme.background }}>
             <FlatList
+                key={'products list'}
                 style={styles.listContainer}
                 data={products}
-                renderItem={({ item }) => <ListItem item={item} theme={theme} />}
+                renderItem={({ item }) => (
+                    <ListItem item={item} theme={theme} onPress={() => removeProduct(item.name)} />
+                )}
                 ListFooterComponent={
                     <PlusSymbol
                         style={styles.addButton}

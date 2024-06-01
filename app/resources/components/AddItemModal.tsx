@@ -6,14 +6,14 @@ import CrossSymbol from '../svg/CrossSymbol.tsx';
 import TickSymbol from '../svg/TickSymbol.tsx';
 import { ThemeType } from '../colors.tsx';
 
-type PropType = {
+type PropTypes = {
     visible: boolean;
     setVisible: (state: boolean) => void;
     addProduct: ({ name, amount, source }: ProductType) => void;
     theme: ThemeType;
 };
 
-export function AddItemModal({ visible, setVisible, addProduct, theme }: PropType) {
+export function AddItemModal({ visible, setVisible, addProduct, theme }: PropTypes) {
     const [name, setName] = useState('');
     const [amount, setAmount] = useState(0);
 
@@ -62,10 +62,12 @@ export function AddItemModal({ visible, setVisible, addProduct, theme }: PropTyp
                             size={40}
                             color={theme.text}
                             onPress={() => {
-                                setName('');
-                                setAmount(0);
-                                addProduct({ name: name.trim(), amount: amount, source: [] });
-                                setVisible(false);
+                                if (name.length > 0) {
+                                    setName('');
+                                    setAmount(0);
+                                    addProduct({ name: name.trim(), amount: amount, source: [] });
+                                    setVisible(false);
+                                }
                             }}
                         />
                     </View>

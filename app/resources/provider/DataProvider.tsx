@@ -9,8 +9,14 @@ const emptyData: DataStructureType = {
     savedMeals: [],
     meals: [],
 };
-const emptyFunctions: { addProduct: ({ name, amount, source }: ProductType) => void } = {
+const emptyFunctions: EmptyFunctionsType = {
     addProduct: () => {},
+    removeProduct: () => {},
+};
+
+type EmptyFunctionsType = {
+    addProduct: ({ name, amount, source }: ProductType) => void;
+    removeProduct: (name: string) => void;
 };
 
 export const DataContext = createContext({ ...emptyData, ...emptyFunctions });
@@ -18,26 +24,28 @@ export const DataContext = createContext({ ...emptyData, ...emptyFunctions });
 export default function DataProvider({ children }: any) {
     const [data, setData] = useState(emptyData);
 
-    function addMealToSaved({ name, products }: SavedMealType) {
-        console.log(name);
-        console.log(products);
-        saveDataToDisk(data).then();
-    }
-
     function addProduct({ name, amount, source }: ProductType) {
-        console.log(`added Product: ${amount} | ${name}, with source:`);
-        console.log(source);
+        const products = data.products.find(v => v.name === name)
+            ? data.products
+            : [{ name, amount, source }, ...data.products];
+        const savedProducts = data.savedProducts.find(v => v.name === name)
+            ? data.savedProducts
+            : [...data.savedProducts, { name, amount, source }];
         const newData: DataStructureType = {
             ...data,
-            products: [...data.products, { name, amount, source }],
-            savedProducts: [...data.savedProducts, { name }],
+            products,
+            savedProducts,
         };
         setData(newData);
         saveDataToDisk(newData).then();
     }
-
     function removeProduct(name: string) {
-        console.log(`removed Product with name ${name}`);
+        const newData: DataStructureType = {
+            ...data,
+            products: data.products.filter(value => value.name !== name),
+        };
+        setData(newData);
+        saveDataToDisk(newData).then();
     }
 
     async function saveDataToDisk(toSave: DataStructureType) {
@@ -72,6 +80,7 @@ export default function DataProvider({ children }: any) {
             meals: data.meals,
 
             addProduct,
+            removeProduct,
         };
     }, [data]);
 
@@ -84,22 +93,18 @@ export type DataStructureType = {
     savedMeals: SavedMealType[];
     meals: MealType[];
 };
-
 export type SavedProductsType = {
     name: string;
 };
-
 export type ProductType = {
     name: string;
     amount: number;
     source: string[];
 };
-
 export type SavedMealType = {
     name: string;
     products: ProductType[];
 };
-
 export type MealType = {
     name: string;
     // Weekday Month Day Year (Sat Jun 01 2024)
