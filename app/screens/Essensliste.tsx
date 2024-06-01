@@ -1,14 +1,15 @@
 import React, { useContext, useState } from 'react';
-import { FlatList, StyleSheet, Text } from 'react-native';
+import { FlatList, StyleSheet } from 'react-native';
 
+import { AddChangeMealModal } from '../resources/components/AddChangeMealModal.tsx';
 import { DataContext, MealType } from '../resources/provider/DataProvider.tsx';
+import { DayItem, MealItem } from '../resources/components/DayListItem.tsx';
 import ReturnArrowSymbol from '../resources/svg/ReturnArrowSymbol.tsx';
 import { ThemeContext } from '../resources/provider/ThemeProvider';
-import { DayItem } from '../resources/components/DayListItem.tsx';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useFocusEffect } from '@react-navigation/native';
 import PlusSymbol from '../resources/svg/PlusSymbol.tsx';
 import ListSymbol from '../resources/svg/ListSymbol.tsx';
-import { useFocusEffect } from '@react-navigation/native';
 
 const emptyItem: MealType = {
     name: '',
@@ -18,12 +19,11 @@ const emptyItem: MealType = {
 
 export default function Essensliste({ navigation }: { navigation: any }) {
     const { theme } = useContext(ThemeContext);
-    const { meals, savedMeals, addDay, modifyDay } = useContext(DataContext);
+    const { meals, savedMeals, addDay, modifyDay, addMeal } = useContext(DataContext);
 
     const [daysVisible, setDaysVisible] = useState(true);
+    const [addMealVisible, setAddMealVisible] = useState(false);
     const [selectedItem, setSelectedItem] = useState(emptyItem);
-
-    console.log(selectedItem);
 
     function setBackButton() {
         navigation.setOptions({
@@ -70,15 +70,40 @@ export default function Essensliste({ navigation }: { navigation: any }) {
                     }
                 />
             ) : (
-                <FlatList
-                    key={'saved meals list'}
-                    style={styles.listContainer}
-                    data={savedMeals}
-                    renderItem={({ item }) => <Text style={{ color: theme.text }}>{item.name}</Text>}
-                    ListFooterComponent={
-                        <PlusSymbol style={styles.addButton} size={55} color={theme.text} onPress={() => {}} />
-                    }
-                />
+                <>
+                    <FlatList
+                        key={'saved meals list'}
+                        style={styles.listContainer}
+                        data={savedMeals}
+                        renderItem={({ item }) => <MealItem item={item} theme={theme} />}
+                        ListFooterComponent={
+                            <PlusSymbol
+                                style={styles.addButton}
+                                size={55}
+                                color={theme.text}
+                                onPress={() => setAddMealVisible(true)}
+                            />
+                        }
+                    />
+
+                    <AddChangeMealModal
+                        key={'add meal'}
+                        visible={addMealVisible}
+                        setVisible={setAddMealVisible}
+                        theme={theme}
+                        selectedItem={selectedItem}
+                        addMeal={({ name, products }) => {
+                            addMeal({ name, products });
+                        }}
+                        setMeal={({ name, products }, day) => {
+                            modifyDay({ name, day, products });
+
+                            navigation.setOptions({ headerLeft: null });
+                            setSelectedItem(emptyItem);
+                            setDaysVisible(!daysVisible);
+                        }}
+                    />
+                </>
             )}
         </SafeAreaView>
     );

@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { FlatList, StyleSheet } from 'react-native';
 
-import { ListItem, ListItemSaved } from '../resources/components/ListItems.tsx';
+import { ListItem, ListItemSaved } from '../resources/components/ProductListItems.tsx';
 import { AddItemModal } from '../resources/components/AddItemModal.tsx';
 import { ThemeContext } from '../resources/provider/ThemeProvider';
 import { DataContext } from '../resources/provider/DataProvider';

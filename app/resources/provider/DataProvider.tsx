@@ -15,6 +15,7 @@ const emptyFunctions: EmptyFunctionsType = {
     removeSavedProduct: () => {},
     addDay: () => {},
     modifyDay: () => {},
+    addMeal: () => {},
 };
 
 type EmptyFunctionsType = {
@@ -23,6 +24,7 @@ type EmptyFunctionsType = {
     removeSavedProduct: (name: string) => void;
     addDay: () => void;
     modifyDay: ({ name, day, products }: MealType) => void;
+    addMeal: ({ name, products }: SavedMealType) => void;
 };
 
 const today = new Date().toDateString();
@@ -102,6 +104,19 @@ export default function DataProvider({ children }: any) {
         setData(newData);
         saveDataToDisk(newData).then();
     }
+    function addMeal({ name, products }: SavedMealType) {
+        const savedMeals = data.savedMeals.find(v => v.name === name)
+            ? data.savedMeals
+            : [...data.savedMeals, { name, products }].sort((a, b) => {
+                  return a.name.localeCompare(b.name);
+              });
+        const newData: DataStructureType = {
+            ...data,
+            savedMeals,
+        };
+        setData(newData);
+        saveDataToDisk(newData).then();
+    }
 
     async function saveDataToDisk(toSave: DataStructureType) {
         try {
@@ -139,6 +154,7 @@ export default function DataProvider({ children }: any) {
             removeSavedProduct,
             addDay,
             modifyDay,
+            addMeal,
         };
     }, [data]);
 

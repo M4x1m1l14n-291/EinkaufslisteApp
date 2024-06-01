@@ -1,9 +1,11 @@
 import React from 'react';
 import { Text, StyleSheet, View } from 'react-native';
 
-import { MealType } from '../provider/DataProvider.tsx';
+import { MealType, SavedMealType } from '../provider/DataProvider.tsx';
 import { ThemeType } from '../colors.tsx';
 import CrossSymbol from '../svg/CrossSymbol.tsx';
+import DeleteSymbol from '../svg/DeleteSymbol.tsx';
+import ReplyArrowSymbol from '../svg/ReplyArrowSymbol.tsx';
 
 type PropTypes = {
     item: MealType;
@@ -31,6 +33,25 @@ export function DayItem({ item, theme, onPressText, onPressDelete }: PropTypes) 
     );
 }
 
+type PropTypesSaved = {
+    item: SavedMealType;
+    theme: ThemeType;
+};
+
+export function MealItem({ item, theme }: PropTypesSaved) {
+    return (
+        <View style={{ ...styles.items, borderColor: theme.text }}>
+            <DeleteSymbol size={35} color={theme.text} />
+
+            <Text style={{ ...styles.name, color: theme.text }} allowFontScaling={false} numberOfLines={1}>
+                {` ${item.name}`}
+            </Text>
+
+            <ReplyArrowSymbol size={35} color={theme.text} />
+        </View>
+    );
+}
+
 const styles = StyleSheet.create({
     container: {
         margin: 2,
@@ -40,6 +61,15 @@ const styles = StyleSheet.create({
         paddingRight: 5,
         flexDirection: 'row',
         alignContent: 'center',
+    },
+    items: {
+        marginBottom: 5,
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        borderWidth: 2,
+        borderRadius: 5,
+        flexDirection: 'row',
+        alignItems: 'center',
     },
     daysText: {
         width: '16%',
