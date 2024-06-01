@@ -32,7 +32,9 @@ export default function DataProvider({ children }: any) {
             : [{ name, amount, source }, ...data.products];
         const savedProducts = data.savedProducts.find(v => v.name === name)
             ? data.savedProducts
-            : [...data.savedProducts, { name, amount, source }];
+            : [...data.savedProducts, { name, amount, source }].sort((a, b) => {
+                  return a.name.localeCompare(b.name);
+              });
         const newData: DataStructureType = {
             ...data,
             products,
