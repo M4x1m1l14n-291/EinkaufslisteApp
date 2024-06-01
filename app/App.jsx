@@ -1,19 +1,21 @@
 import React from 'react';
 
-import ThemeProvider from './resources/providers/ThemeProvider';
-import { NavigationContainer } from '@react-navigation/native';
-import EinkaufsListe from './screens/EinkaufsListe.jsx';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import ThemeProvider from './resources/provider/ThemeProvider';
+import Navigation from './resources/navigation/Navigation';
 
 export default function App() {
     return (
         <Providers>
-            <NavigationContainer>
-                <EinkaufsListe />
-            </NavigationContainer>
+            <Navigation />
         </Providers>
     );
 }
 
 function Providers({ children }) {
-    return <ThemeProvider>{children}</ThemeProvider>;
+    return (
+        <ThemeProvider>
+            <SafeAreaProvider>{children}</SafeAreaProvider>
+        </ThemeProvider>
+    );
 }

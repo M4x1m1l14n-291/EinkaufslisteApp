@@ -1,12 +1,18 @@
 export const themes = {
     light: {
         type: 'light',
-        statusBarBackground: 'transparent',
-        statusBarContent: 'light-content',
+        isLight: true,
+        headerBarBackground: 'white',
+        statusBarContent: 'dark-content',
+        textColor: 'black',
+        textInactive: 'grey',
     },
     dark: {
         type: 'dark',
-        statusBarBackground: 'transparent',
-        statusBarContent: 'dark-content',
+        isLight: false,
+        headerBarBackground: 'black',
+        statusBarContent: 'light-content',
+        textColor: 'white',
+        textInactive: 'grey',
     },
 };
