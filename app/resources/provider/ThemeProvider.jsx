@@ -45,7 +45,7 @@ export default function ThemeProvider({ children }) {
     }, []);
 
     const obj = useMemo(() => {
-        return { theme, switchTheme: switchTheme };
+        return { theme, switchTheme };
     }, [theme]);
 
     return (

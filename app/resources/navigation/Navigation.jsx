@@ -53,5 +53,6 @@ function getTabBarIcon(route) {
 }
 
 function themeButton(color, onPress) {
+    // eslint-disable-next-line react-native/no-inline-styles
     return <ThemeSymbol key={'themeButton'} style={{ marginRight: 10 }} size={40} color={color} onPress={onPress} />;
 }
