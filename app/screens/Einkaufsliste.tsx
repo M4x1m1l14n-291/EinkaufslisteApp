@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { FlatList, StyleSheet } from 'react-native';
 
 import { ThemeContext } from '../resources/provider/ThemeProvider';
@@ -8,6 +8,7 @@ import PlusSymbol from '../resources/svg/PlusSymbol.tsx';
 import { ListItem, ListItemSaved } from '../resources/components/ListItems.tsx';
 import { AddItemModal } from '../resources/components/AddItemModal.tsx';
 import ListSymbol from '../resources/svg/ListSymbol.tsx';
+import { useFocusEffect } from '@react-navigation/native';
 
 export default function Einkaufsliste({ navigation }: { navigation: any }) {
     const { theme } = useContext(ThemeContext);
@@ -16,13 +17,11 @@ export default function Einkaufsliste({ navigation }: { navigation: any }) {
     const [productsListVisible, setProductsListVisible] = useState(true);
     const [addItemVisible, setAddItemVisible] = useState(false);
 
-    useEffect(() => {
-        // Use `setOptions` to update the button that we previously specified
-        // Now the button includes an `onPress` handler to update the count
+    useFocusEffect(() =>
         navigation.setOptions({
             headerRight: () => listButton(theme.text, () => setProductsListVisible(!productsListVisible)),
-        });
-    }, [navigation]);
+        })
+    );
 
     return (
         <SafeAreaView style={{ ...styles.container, backgroundColor: theme.background }}>
