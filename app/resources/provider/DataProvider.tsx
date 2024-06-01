@@ -10,8 +10,12 @@ const emptyData: DataStructureType = {
     meals: [],
 };
 
+const emptyFunctions: { addProduct: any } = {
+    addProduct: () => {},
+};
+
 // savedProducts, products, savedMeals, meals
-export const DataContext = createContext(emptyData);
+export const DataContext = createContext({ ...emptyData, ...emptyFunctions });
 
 export default function DataProvider({ children }: any) {
     const [data, setData] = useState(emptyData);
@@ -19,6 +23,12 @@ export default function DataProvider({ children }: any) {
     function addMealToSaved(name: string, products: ProductType[]) {
         console.log(name);
         console.log(products);
+    }
+
+    function addProduct({ name, amount, source }: ProductType) {
+        console.log(name);
+        console.log(amount);
+        console.log(source);
     }
 
     async function saveDataToDisk(toSave: DataStructureType) {
@@ -52,27 +62,13 @@ export default function DataProvider({ children }: any) {
             products: data.products,
             savedMeals: data.savedMeals,
             meals: data.meals,
+
+            addProduct,
         };
     }, [data]);
 
     return <DataContext.Provider value={obj}>{children}</DataContext.Provider>;
 }
-
-const testData: DataStructureType = {
-    savedProducts: [{ name: 'test product 1' }, { name: 'test product 2' }],
-    products: [
-        { name: 'test product 1', amount: 2, source: ['test meal 1'] },
-        { name: 'test product 2', amount: 3, source: ['test meal 1', 'test meal 2'] },
-    ],
-    savedMeals: [{ name: 'test meal 1', products: [{ name: 'test product 2', amount: 3, source: ['test meal 1'] }] }],
-    meals: [
-        {
-            name: 'test meal 1',
-            day: new Date().toDateString(),
-            products: [{ name: 'test product 2', amount: 3, source: ['test meal 1'] }],
-        },
-    ],
-};
 
 export type DataStructureType = {
     savedProducts: SavedProductsType[];

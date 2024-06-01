@@ -7,7 +7,7 @@ export const themes: { light: ThemeType; dark: ThemeType } = {
         headerBarBackground: 'white',
         background: '#f4f4f4',
         statusBarContent: 'dark-content',
-        textColor: '#000',
+        text: '#000',
         textInactive: 'grey',
     },
     dark: {
@@ -16,7 +16,7 @@ export const themes: { light: ThemeType; dark: ThemeType } = {
         headerBarBackground: 'black',
         background: '#191919',
         statusBarContent: 'light-content',
-        textColor: '#fff',
+        text: '#fff',
         textInactive: 'grey',
     },
 };
@@ -27,6 +27,6 @@ export type ThemeType = {
     headerBarBackground: string;
     background: string;
     statusBarContent: StatusBarStyle;
-    textColor: string;
+    text: string;
     textInactive: string;
 };

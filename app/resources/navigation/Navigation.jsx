@@ -24,12 +24,12 @@ export default function Navigation() {
                         tabBarIcon: getTabBarIcon(route),
                         tabBarShowLabel: false,
                         tabBarStyle: { backgroundColor: theme.headerBarBackground },
-                        tabBarActiveTintColor: theme.textColor,
+                        tabBarActiveTintColor: theme.text,
                         tabBarInactiveTintColor: theme.textInactive,
                         tabBarHideOnKeyboard: true,
                         headerStyle: { backgroundColor: theme.headerBarBackground },
                         headerTitleAlign: 'center',
-                        headerTintColor: theme.textColor,
+                        headerTintColor: theme.text,
                     };
                 }}
             >
@@ -39,7 +39,7 @@ export default function Navigation() {
                     name={pagesKeys.einstellungen}
                     component={Settings}
                     options={{
-                        headerRight: () => themeButton(theme.textColor, switchTheme),
+                        headerRight: () => themeButton(theme.text, switchTheme),
                     }}
                 />
             </Tab.Navigator>
