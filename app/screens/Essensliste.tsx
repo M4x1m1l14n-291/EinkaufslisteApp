@@ -19,7 +19,7 @@ const emptyItem: MealType = {
 
 export default function Essensliste({ navigation }: { navigation: any }) {
     const { theme } = useContext(ThemeContext);
-    const { meals, savedMeals, addDay, modifyDay, addMeal } = useContext(DataContext);
+    const { meals, savedMeals, addDay, modifyDay, addMeal, removeMeal } = useContext(DataContext);
 
     const [daysVisible, setDaysVisible] = useState(true);
     const [addMealVisible, setAddMealVisible] = useState(false);
@@ -75,7 +75,9 @@ export default function Essensliste({ navigation }: { navigation: any }) {
                         key={'saved meals list'}
                         style={styles.listContainer}
                         data={savedMeals}
-                        renderItem={({ item }) => <MealItem item={item} theme={theme} />}
+                        renderItem={({ item }) => (
+                            <MealItem item={item} theme={theme} onLongPress={() => removeMeal(item.name)} />
+                        )}
                         ListFooterComponent={
                             <PlusSymbol
                                 style={styles.addButton}
