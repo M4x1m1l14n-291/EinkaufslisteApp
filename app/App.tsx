@@ -3,6 +3,7 @@ import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import ThemeProvider from './resources/provider/ThemeProvider';
 import Navigation from './resources/navigation/Navigation';
+import DataProvider from './resources/provider/DataProvider';
 
 export default function App() {
     return (
@@ -12,10 +13,12 @@ export default function App() {
     );
 }
 
-function Providers({ children }) {
+function Providers({ children }: any) {
     return (
         <ThemeProvider>
-            <SafeAreaProvider>{children}</SafeAreaProvider>
+            <DataProvider>
+                <SafeAreaProvider>{children}</SafeAreaProvider>
+            </DataProvider>
         </ThemeProvider>
     );
 }

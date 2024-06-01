@@ -7,12 +7,12 @@ import { asyncStorageKeys, themeKeys } from '../constants';
 import { themes } from '../colors';
 
 // themeState, switchTheme
-export const ThemeContext = createContext({ theme: themes.light });
+export const ThemeContext = createContext({ theme: themes.light, switchTheme: () => {} });
 
-export default function ThemeProvider({ children }) {
+export default function ThemeProvider({ children }: any) {
     const [theme, setTheme] = useState(useColorScheme() === themeKeys.dark ? themes.dark : themes.light);
 
-    async function saveThemeToDisk(toSave) {
+    async function saveThemeToDisk(toSave: string) {
         try {
             await AsyncStorage.setItem(asyncStorageKeys.theme, toSave);
         } catch (e) {

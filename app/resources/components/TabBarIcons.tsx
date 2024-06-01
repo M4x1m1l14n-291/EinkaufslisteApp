@@ -3,14 +3,15 @@ import React from 'react';
 import SettingsSymbol from '../svg/SettingsSymbol';
 import ListSymbol from '../svg/ListSymbol';
 import MealSymbol from '../svg/MealSymbol';
+import { pagesKeys } from '../constants.tsx';
 
-export default function TabBarIcons({ name, size = 24, color = 'black' }) {
+export default function TabBarIcons({ name = '', size = 24, color = 'black' }) {
     switch (name) {
-        case 'EINKAUFEN':
+        case pagesKeys.einkaufen:
             return <ListSymbol size={size} color={color} />;
-        case 'EINSTELLUNGEN':
+        case pagesKeys.einstellungen:
             return <SettingsSymbol size={size} color={color} />;
-        case 'ESSEN':
+        case pagesKeys.essen:
             return <MealSymbol size={size} color={color} />;
         default:
             return undefined;

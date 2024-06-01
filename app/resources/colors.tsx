@@ -1,4 +1,6 @@
-export const themes = {
+import { StatusBarStyle } from 'react-native';
+
+export const themes: { light: ThemeType; dark: ThemeType } = {
     light: {
         type: 'light',
         isLight: true,
@@ -17,4 +19,14 @@ export const themes = {
         textColor: '#fff',
         textInactive: 'grey',
     },
+};
+
+export type ThemeType = {
+    type: string;
+    isLight: boolean;
+    headerBarBackground: string;
+    background: string;
+    statusBarContent: StatusBarStyle;
+    textColor: string;
+    textInactive: string;
 };

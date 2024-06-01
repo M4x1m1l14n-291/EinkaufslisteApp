@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Svg, { Path } from 'react-native-svg';
 
-export default function ThemeSymbol({ size = 24, color = 'black', style, onPress }) {
+export default function ThemeSymbol({ size = 24, color = 'black', style = {}, onPress = () => {} }) {
     return (
         <Svg style={style} viewBox={'0 -960 960 960'} height={size} width={size} fill={'none'} onPress={onPress}>
             <Path
