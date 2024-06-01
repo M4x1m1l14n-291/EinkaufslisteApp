@@ -69,6 +69,20 @@ def enableProguardInReleaseBuilds = false
  */
 def jscFlavor = 'org.webkit:android-jsc:+'
 
+/*import groovy.json.*
+
+static def getPackageVersion() {
+    def inputFile = new File("../package.json")
+    def packageJson = new JsonSlurper().parseText(inputFile.text)
+    return packageJson["version"]
+}*/
+
+/* calculated from git commits to give sequential integers */
+static def getGitVersion() {
+    def process = "git rev-list master --first-parent --count".execute()
+    return process.text.toInteger()
+}
+
 android {
     ndkVersion rootProject.ext.ndkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
@@ -79,8 +93,8 @@ android {
         applicationId "com.elist"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 2
-        versionName "0.0.2"
+        versionCode getGitVersion()
+        versionName "0.0.3"
     }
     signingConfigs {
         debug {
