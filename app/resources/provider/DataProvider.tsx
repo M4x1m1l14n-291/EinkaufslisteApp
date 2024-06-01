@@ -13,13 +13,17 @@ const emptyFunctions: EmptyFunctionsType = {
     addProduct: () => {},
     removeProduct: () => {},
     removeSavedProduct: () => {},
+    addDay: () => {},
 };
 
 type EmptyFunctionsType = {
     addProduct: ({ name, amount, source }: ProductType) => void;
     removeProduct: (name: string) => void;
     removeSavedProduct: (name: string) => void;
+    addDay: () => void;
 };
+
+const today = new Date().toDateString();
 
 export const DataContext = createContext({ ...emptyData, ...emptyFunctions });
 
@@ -60,6 +64,31 @@ export default function DataProvider({ children }: any) {
         saveDataToDisk(newData).then();
     }
 
+    function addDay() {
+        function meals() {
+            if (data.meals.length > 0) {
+                const lastDayDate = data.meals.at(data.meals.length - 1)!.day;
+                const nextDayDate = new Date(new Date(lastDayDate).getTime() + 86400000).toDateString();
+                return [
+                    ...data.meals,
+                    {
+                        name: '',
+                        day: nextDayDate,
+                        products: [],
+                    },
+                ];
+            }
+            return [{ name: '', day: today, products: [] }];
+        }
+
+        const newData: DataStructureType = {
+            ...data,
+            meals: meals(),
+        };
+        setData(newData);
+        saveDataToDisk(newData).then();
+    }
+
     async function saveDataToDisk(toSave: DataStructureType) {
         try {
             const jsonSerialized = JSON.stringify(toSave);
@@ -94,6 +123,7 @@ export default function DataProvider({ children }: any) {
             addProduct,
             removeProduct,
             removeSavedProduct,
+            addDay,
         };
     }, [data]);
 
@@ -120,7 +150,7 @@ export type SavedMealType = {
 };
 export type MealType = {
     name: string;
-    // Weekday Month Day Year (Sat Jun 01 2024)
+    // Sat Jun 01 2024
     day: string;
     products: ProductType[];
 };
