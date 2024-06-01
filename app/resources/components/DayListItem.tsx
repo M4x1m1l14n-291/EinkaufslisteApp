@@ -22,7 +22,7 @@ export function DayItem({ item, theme, onPressText, onPressDelete }: PropTypes) 
                 |
             </Text>
             <Text style={{ ...styles.name, color: theme.text }} onPress={onPressText}>
-                {item.name}
+                {item.name.length > 0 ? item.name : '...'}
             </Text>
             {item.name.length > 0 && (
                 <CrossSymbol style={styles.delete} size={40} color={theme.text} onPress={onPressDelete} />

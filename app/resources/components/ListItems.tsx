@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import { ProductType, SavedProductsType } from '../provider/DataProvider.tsx';
-import BackArrowSymbol from '../svg/BackArrowSymbol.tsx';
+import ReplyArrowSymbol from '../svg/ReplyArrowSymbol.tsx';
 import DeleteSymbol from '../svg/DeleteSymbol.tsx';
 import TickSymbol from '../svg/TickSymbol.tsx';
 import { ThemeType } from '../colors.tsx';
@@ -42,7 +42,7 @@ export function ListItemSaved({ item, theme, onDeletePress, onAddPress }: PropTy
                 {` ${item.name}`}
             </Text>
 
-            <BackArrowSymbol size={35} color={theme.text} onPress={onAddPress} />
+            <ReplyArrowSymbol size={35} color={theme.text} onPress={onAddPress} />
         </View>
     );
 }
