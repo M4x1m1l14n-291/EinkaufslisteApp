@@ -79,7 +79,7 @@ static def getPackageVersion() {
 
 /* calculated from git commits to give sequential integers */
 static def getGitVersion() {
-    def process = "git rev-list master --first-parent --count".execute()
+    def process = "git rev-list main --first-parent --count".execute()
     return process.text.toInteger()
 }
 
@@ -95,6 +95,7 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode getGitVersion()
         versionName "0.0.3"
+        archivesBaseName = "Einkaufsliste-" + versionName
     }
     signingConfigs {
         debug {
