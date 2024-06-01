@@ -9,26 +9,26 @@ const emptyData: DataStructureType = {
     savedMeals: [],
     meals: [],
 };
-
-const emptyFunctions: { addProduct: any } = {
+const emptyFunctions: { addProduct: ({ name, amount, source }: ProductType) => void } = {
     addProduct: () => {},
 };
 
-// savedProducts, products, savedMeals, meals
 export const DataContext = createContext({ ...emptyData, ...emptyFunctions });
 
 export default function DataProvider({ children }: any) {
     const [data, setData] = useState(emptyData);
 
-    function addMealToSaved(name: string, products: ProductType[]) {
+    function addMealToSaved({ name, products }: SavedMealType) {
         console.log(name);
         console.log(products);
+        saveDataToDisk(data).then();
     }
 
     function addProduct({ name, amount, source }: ProductType) {
         console.log(name);
         console.log(amount);
         console.log(source);
+        saveDataToDisk(data).then();
     }
 
     async function saveDataToDisk(toSave: DataStructureType) {
@@ -39,7 +39,6 @@ export default function DataProvider({ children }: any) {
             console.error(`error when saving data to disk: ${e}`);
         }
     }
-
     async function loadDataFromDisk() {
         try {
             const loadedData = await AsyncStorage.getItem(asyncStorageKeys.data);
@@ -89,12 +88,12 @@ export type ProductType = {
 
 export type SavedMealType = {
     name: string;
-    products: [ProductType];
+    products: ProductType[];
 };
 
 export type MealType = {
     name: string;
     // Weekday Month Day Year (Sat Jun 01 2024)
     day: string;
-    products: [ProductType];
+    products: ProductType[];
 };

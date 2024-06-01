@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { Pressable, StyleSheet, TextInput, View } from 'react-native';
 
+import { ProductType } from '../provider/DataProvider.tsx';
 import CrossSymbol from '../svg/CrossSymbol.tsx';
 import TickSymbol from '../svg/TickSymbol.tsx';
 import { ThemeType } from '../colors.tsx';
-import { ProductType } from '../provider/DataProvider.tsx';
 
 type PropType = {
     visible: boolean;
-    setVisible: any;
+    setVisible: (state: boolean) => void;
     addProduct: ({ name, amount, source }: ProductType) => void;
     theme: ThemeType;
 };
@@ -59,7 +59,7 @@ export function AddItemModal({ visible, setVisible, addProduct, theme }: PropTyp
                             onPress={() => {
                                 setName('');
                                 setAmount(0);
-                                addProduct({ name: name, amount: amount, source: [] });
+                                addProduct({ name: name.trim(), amount: amount, source: [] });
                                 setVisible(false);
                             }}
                         />

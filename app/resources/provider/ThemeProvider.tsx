@@ -6,7 +6,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { asyncStorageKeys, themeKeys } from '../constants';
 import { themes } from '../colors';
 
-// themeState, switchTheme
 export const ThemeContext = createContext({ theme: themes.light, switchTheme: () => {} });
 
 export default function ThemeProvider({ children }: any) {
