@@ -9,6 +9,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useFocusEffect } from '@react-navigation/native';
 import PlusSymbol from '../resources/svg/PlusSymbol.tsx';
 import ListSymbol from '../resources/svg/ListSymbol.tsx';
+import { pagesKeys } from '../resources/constants.tsx';
 
 export default function Einkaufsliste({ navigation }: { navigation: any }) {
     const { theme } = useContext(ThemeContext);
@@ -19,7 +20,11 @@ export default function Einkaufsliste({ navigation }: { navigation: any }) {
 
     useFocusEffect(() =>
         navigation.setOptions({
-            headerRight: () => listButton(theme.text, () => setProductsListVisible(!productsListVisible)),
+            headerRight: () =>
+                listButton(theme.text, () => {
+                    navigation.setOptions({ title: productsListVisible ? pagesKeys.gespeichert : pagesKeys.einkaufen });
+                    setProductsListVisible(!productsListVisible);
+                }),
         })
     );
 

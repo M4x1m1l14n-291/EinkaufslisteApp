@@ -10,6 +10,7 @@ export const themeKeys = {
 
 export const pagesKeys = {
     einkaufen: 'EINKAUFEN',
+    gespeichert: 'GESPEICHERT',
     essen: 'ESSEN',
     einstellungen: 'EINSTELLUNGEN',
 };
