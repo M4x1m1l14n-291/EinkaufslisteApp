@@ -5,7 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import Einkaufsliste from '../../screens/Einkaufsliste';
 import TabBarIcons from '../components/TabBarIcons';
 import { ThemeContext } from '../provider/ThemeProvider';
-import Essensliste from '../../screens/Essensliste';
+import Essensliste from '../../screens/Essensliste.tsx';
 import Settings from '../../screens/Settings';
 import ThemeSymbol from '../svg/ThemeSymbol';
 import { pagesKeys } from '../constants';
@@ -18,7 +18,7 @@ export default function Navigation() {
     return (
         <NavigationContainer>
             <Tab.Navigator
-                initialRouteName={'EINKAUFEN'}
+                initialRouteName={pagesKeys.einkaufen}
                 screenOptions={({ route }) => {
                     return {
                         tabBarIcon: getTabBarIcon(route),
@@ -32,6 +32,7 @@ export default function Navigation() {
                         headerTintColor: theme.text,
                     };
                 }}
+                backBehavior={'initialRoute'}
             >
                 <Tab.Screen name={pagesKeys.essen} component={Essensliste} />
                 <Tab.Screen name={pagesKeys.einkaufen} component={Einkaufsliste} />

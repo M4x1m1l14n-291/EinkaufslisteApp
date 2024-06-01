@@ -63,7 +63,12 @@ export default function Einkaufsliste({ navigation }: { navigation: any }) {
                     style={styles.listContainer}
                     data={savedProducts}
                     renderItem={({ item }) => (
-                        <ListItemSaved item={item} theme={theme} onPress={() => removeSavedProduct(item.name)} />
+                        <ListItemSaved
+                            item={item}
+                            theme={theme}
+                            onDeletePress={() => removeSavedProduct(item.name)}
+                            onAddPress={() => addProduct({ name: item.name, amount: 0, source: [] })}
+                        />
                     )}
                 />
             )}

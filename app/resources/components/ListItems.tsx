@@ -4,6 +4,8 @@ import { StyleSheet, Text, View } from 'react-native';
 import TickSymbol from '../svg/TickSymbol.tsx';
 import React from 'react';
 import CrossSymbol from '../svg/CrossSymbol.tsx';
+import DeleteSymbol from '../svg/DeleteSymbol.tsx';
+import BackArrowSymbol from '../svg/BackArrowSymbol.tsx';
 
 type PropTypes = {
     item: ProductType;
@@ -27,17 +29,20 @@ export function ListItem({ item, theme, onPress }: PropTypes) {
 type PropTypesSaved = {
     item: SavedProductsType;
     theme: ThemeType;
-    onPress?: any;
+    onDeletePress?: any;
+    onAddPress?: any;
 };
 
-export function ListItemSaved({ item, theme, onPress }: PropTypesSaved) {
+export function ListItemSaved({ item, theme, onDeletePress, onAddPress }: PropTypesSaved) {
     return (
         <View style={{ ...styles.items, borderColor: theme.text }}>
+            <DeleteSymbol size={35} color={theme.text} onPress={onDeletePress} />
+
             <Text style={{ ...styles.itemText, color: theme.text }} allowFontScaling={false} numberOfLines={1}>
-                {item.name}
+                {` ${item.name}`}
             </Text>
 
-            <CrossSymbol size={35} color={theme.text} onPress={onPress} />
+            <BackArrowSymbol size={35} color={theme.text} onPress={onAddPress} />
         </View>
     );
 }
