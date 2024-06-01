@@ -1,7 +1,14 @@
 import * as React from 'react';
 import Svg, { Path } from 'react-native-svg';
 
-export default function ListSymbol({ size = 24, color = 'black', style = {}, onPress = () => {} }) {
+type PropTypes = {
+    size: number;
+    color: string;
+    style?: any;
+    onPress?: any;
+};
+
+export default function ListSymbol({ size = 24, color = 'black', style, onPress }: PropTypes) {
     return (
         <Svg style={style} viewBox={'0 -960 960 960'} height={size} width={size} fill={'none'} onPress={onPress}>
             <Path

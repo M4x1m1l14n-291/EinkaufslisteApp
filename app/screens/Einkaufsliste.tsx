@@ -1,14 +1,14 @@
 import React, { useContext, useState } from 'react';
 import { FlatList, StyleSheet } from 'react-native';
 
-import { ThemeContext } from '../resources/provider/ThemeProvider';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { DataContext } from '../resources/provider/DataProvider';
-import PlusSymbol from '../resources/svg/PlusSymbol.tsx';
 import { ListItem, ListItemSaved } from '../resources/components/ListItems.tsx';
 import { AddItemModal } from '../resources/components/AddItemModal.tsx';
-import ListSymbol from '../resources/svg/ListSymbol.tsx';
+import { ThemeContext } from '../resources/provider/ThemeProvider';
+import { DataContext } from '../resources/provider/DataProvider';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useFocusEffect } from '@react-navigation/native';
+import PlusSymbol from '../resources/svg/PlusSymbol.tsx';
+import ListSymbol from '../resources/svg/ListSymbol.tsx';
 
 export default function Einkaufsliste({ navigation }: { navigation: any }) {
     const { theme } = useContext(ThemeContext);

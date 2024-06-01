@@ -1,7 +1,14 @@
 import * as React from 'react';
 import Svg, { Path } from 'react-native-svg';
 
-export default function SettingsSymbol({ size = 24, color = 'black' }) {
+type PropTypes = {
+    size: number;
+    color: string;
+    style?: any;
+    onPress?: any;
+};
+
+export default function SettingsSymbol({ size = 24, color = 'black', style, onPress }: PropTypes) {
     return (
         <Svg viewBox={'0 -960 960 960'} height={size} width={size} fill={'none'}>
             <Path
