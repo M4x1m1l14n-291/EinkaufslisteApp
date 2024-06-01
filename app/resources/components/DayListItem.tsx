@@ -1,26 +1,33 @@
 import React from 'react';
-import { Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, StyleSheet, View } from 'react-native';
 
 import { MealType } from '../provider/DataProvider.tsx';
 import { ThemeType } from '../colors.tsx';
+import CrossSymbol from '../svg/CrossSymbol.tsx';
 
 type PropTypes = {
     item: MealType;
     theme: ThemeType;
-    onPressItem: any;
+    onPressText: any;
+    onPressDelete: any;
 };
 
-export function DayItem({ item, theme, onPressItem }: PropTypes) {
+export function DayItem({ item, theme, onPressText, onPressDelete }: PropTypes) {
     return (
-        <TouchableOpacity style={{ ...styles.container, borderColor: theme.text }} onPress={onPressItem}>
+        <View style={{ ...styles.container, borderColor: theme.text }}>
             <Text numberOfLines={1} style={{ ...styles.daysText, color: theme.text }}>
                 {item.day.substring(0, 3)}
             </Text>
             <Text numberOfLines={1} style={{ ...styles.separator, color: theme.text }}>
                 |
             </Text>
-            <Text style={{ ...styles.name, color: theme.text }}>{item.name}</Text>
-        </TouchableOpacity>
+            <Text style={{ ...styles.name, color: theme.text }} onPress={onPressText}>
+                {item.name}
+            </Text>
+            {item.name.length > 0 && (
+                <CrossSymbol style={styles.delete} size={40} color={theme.text} onPress={onPressDelete} />
+            )}
+        </View>
     );
 }
 
@@ -45,9 +52,12 @@ const styles = StyleSheet.create({
         fontSize: 34,
     },
     name: {
-        minWidth: '30%',
+        flex: 1,
         paddingRight: 10,
         paddingVertical: 10,
         fontSize: 24,
+    },
+    delete: {
+        justifyContent: 'center',
     },
 });

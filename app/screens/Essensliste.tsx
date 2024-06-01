@@ -9,14 +9,21 @@ import PlusSymbol from '../resources/svg/PlusSymbol.tsx';
 
 export default function Essensliste() {
     const { theme } = useContext(ThemeContext);
-    const { meals, savedMeals, addDay } = useContext(DataContext);
+    const { meals, savedMeals, addDay, modifyDay } = useContext(DataContext);
 
     return (
         <SafeAreaView style={{ ...styles.container, backgroundColor: theme.background }}>
             <FlatList
                 style={styles.listContainer}
                 data={meals}
-                renderItem={({ item }) => <DayItem item={item} theme={theme} onPressItem={() => {}} />}
+                renderItem={({ item }) => (
+                    <DayItem
+                        item={item}
+                        theme={theme}
+                        onPressText={() => modifyDay({ name: 'test1', day: item.day, products: [] })}
+                        onPressDelete={() => modifyDay({ name: '', day: item.day, products: [] })}
+                    />
+                )}
                 ListFooterComponent={
                     <PlusSymbol style={styles.addButton} size={55} color={theme.text} onPress={addDay} />
                 }

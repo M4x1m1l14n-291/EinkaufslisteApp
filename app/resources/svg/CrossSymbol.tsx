@@ -12,8 +12,8 @@ type PropTypes = {
 export default function CrossSymbol({ size = 24, color = 'black', style, onPress }: PropTypes) {
     if (onPress) {
         return (
-            <TouchableOpacity onPress={onPress}>
-                <Svg style={style} viewBox={'0 -960 960 960'} height={size} width={size}>
+            <TouchableOpacity style={style} onPress={onPress}>
+                <Svg viewBox={'0 -960 960 960'} height={size} width={size}>
                     <Path
                         fill={color}
                         d={
