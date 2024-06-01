@@ -1,11 +1,11 @@
-import { ProductType, SavedProductsType } from '../provider/DataProvider.tsx';
-import { ThemeType } from '../colors.tsx';
-import { StyleSheet, Text, View } from 'react-native';
-import TickSymbol from '../svg/TickSymbol.tsx';
 import React from 'react';
-import CrossSymbol from '../svg/CrossSymbol.tsx';
-import DeleteSymbol from '../svg/DeleteSymbol.tsx';
+import { StyleSheet, Text, View } from 'react-native';
+
+import { ProductType, SavedProductsType } from '../provider/DataProvider.tsx';
 import BackArrowSymbol from '../svg/BackArrowSymbol.tsx';
+import DeleteSymbol from '../svg/DeleteSymbol.tsx';
+import TickSymbol from '../svg/TickSymbol.tsx';
+import { ThemeType } from '../colors.tsx';
 
 type PropTypes = {
     item: ProductType;
