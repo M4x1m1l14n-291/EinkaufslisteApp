@@ -31,7 +31,12 @@ export function AddItemModal({ visible, setVisible, addProduct, theme }: PropTyp
                             allowFontScaling={false}
                             placeholder={'0'}
                             placeholderTextColor={theme.text}
-                            onChangeText={text => setAmount(parseInt(text, 10))}
+                            onChangeText={text => {
+                                const num = parseInt(text, 10);
+                                if (!isNaN(num)) {
+                                    setAmount(num);
+                                }
+                            }}
                         />
 
                         <TextInput

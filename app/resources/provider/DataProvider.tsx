@@ -25,10 +25,19 @@ export default function DataProvider({ children }: any) {
     }
 
     function addProduct({ name, amount, source }: ProductType) {
-        console.log(name);
-        console.log(amount);
+        console.log(`added Product: ${amount} | ${name}, with source:`);
         console.log(source);
-        saveDataToDisk(data).then();
+        const newData: DataStructureType = {
+            ...data,
+            products: [...data.products, { name, amount, source }],
+            savedProducts: [...data.savedProducts, { name }],
+        };
+        setData(newData);
+        saveDataToDisk(newData).then();
+    }
+
+    function removeProduct(name: string) {
+        console.log(`removed Product with name ${name}`);
     }
 
     async function saveDataToDisk(toSave: DataStructureType) {
