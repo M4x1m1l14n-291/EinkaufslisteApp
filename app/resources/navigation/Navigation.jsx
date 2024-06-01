@@ -7,15 +7,17 @@ import TabBarIcons from '../components/TabBarIcons';
 import { ThemeContext } from '../provider/ThemeProvider';
 import Essensliste from '../../screens/Essensliste';
 import Settings from '../../screens/Settings';
+import ThemeSymbol from '../svg/ThemeSymbol';
 
 const Tab = createBottomTabNavigator();
 
 export default function Navigation() {
-    const { theme } = useContext(ThemeContext);
+    const { theme, switchTheme } = useContext(ThemeContext);
 
     return (
         <NavigationContainer>
             <Tab.Navigator
+                initialRouteName={'EINKAUFEN'}
                 screenOptions={({ route }) => {
                     return {
                         tabBarIcon: getTabBarIcon(route),
@@ -32,7 +34,13 @@ export default function Navigation() {
             >
                 <Tab.Screen name={'ESSEN'} component={Essensliste} />
                 <Tab.Screen name={'EINKAUFEN'} component={EinkaufsListe} />
-                <Tab.Screen name={'EINSTELLUNGEN'} component={Settings} />
+                <Tab.Screen
+                    name={'EINSTELLUNGEN'}
+                    component={Settings}
+                    options={{
+                        headerRight: () => themeButton(theme.textColor, switchTheme),
+                    }}
+                />
             </Tab.Navigator>
         </NavigationContainer>
     );
@@ -42,4 +50,8 @@ function getTabBarIcon(route) {
     return ({ focused, color, size }) => {
         return <TabBarIcons name={route.name} size={size + 8 + (focused ? 4 : 0)} color={color} />;
     };
+}
+
+function themeButton(color, onPress) {
+    return <ThemeSymbol key={'themeButton'} style={{ marginRight: 10 }} size={40} color={color} onPress={onPress} />;
 }
