@@ -12,11 +12,13 @@ const emptyData: DataStructureType = {
 const emptyFunctions: EmptyFunctionsType = {
     addProduct: () => {},
     removeProduct: () => {},
+    removeSavedProduct: () => {},
 };
 
 type EmptyFunctionsType = {
     addProduct: ({ name, amount, source }: ProductType) => void;
     removeProduct: (name: string) => void;
+    removeSavedProduct: (name: string) => void;
 };
 
 export const DataContext = createContext({ ...emptyData, ...emptyFunctions });
@@ -43,6 +45,14 @@ export default function DataProvider({ children }: any) {
         const newData: DataStructureType = {
             ...data,
             products: data.products.filter(value => value.name !== name),
+        };
+        setData(newData);
+        saveDataToDisk(newData).then();
+    }
+    function removeSavedProduct(name: string) {
+        const newData: DataStructureType = {
+            ...data,
+            savedProducts: data.savedProducts.filter(value => value.name !== name),
         };
         setData(newData);
         saveDataToDisk(newData).then();
@@ -81,6 +91,7 @@ export default function DataProvider({ children }: any) {
 
             addProduct,
             removeProduct,
+            removeSavedProduct,
         };
     }, [data]);
 

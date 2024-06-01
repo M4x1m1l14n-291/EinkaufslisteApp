@@ -12,7 +12,7 @@ import ListSymbol from '../resources/svg/ListSymbol.tsx';
 
 export default function Einkaufsliste({ navigation }: { navigation: any }) {
     const { theme } = useContext(ThemeContext);
-    const { products, savedProducts, addProduct, removeProduct } = useContext(DataContext);
+    const { products, savedProducts, addProduct, removeProduct, removeSavedProduct } = useContext(DataContext);
 
     const [productsListVisible, setProductsListVisible] = useState(true);
     const [addItemVisible, setAddItemVisible] = useState(false);
@@ -57,7 +57,9 @@ export default function Einkaufsliste({ navigation }: { navigation: any }) {
                     key={'saved products list'}
                     style={styles.listContainer}
                     data={savedProducts}
-                    renderItem={({ item }) => <ListItemSaved item={item} theme={theme} onPress={() => {}} />}
+                    renderItem={({ item }) => (
+                        <ListItemSaved item={item} theme={theme} onPress={() => removeSavedProduct(item.name)} />
+                    )}
                 />
             )}
         </SafeAreaView>
@@ -65,12 +67,15 @@ export default function Einkaufsliste({ navigation }: { navigation: any }) {
 }
 
 function listButton(color: string, onPress: any) {
-    return <ListSymbol style={{ marginRight: 10 }} size={40} color={color} onPress={onPress} />;
+    return <ListSymbol style={styles.listIcon} size={35} color={color} onPress={onPress} />;
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    listIcon: {
+        marginRight: 10,
     },
     listContainer: {
         padding: 5,
