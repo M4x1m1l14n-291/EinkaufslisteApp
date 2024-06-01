@@ -2,7 +2,7 @@ import React from 'react';
 
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import ThemeProvider from './resources/provider/ThemeProvider';
-import Navigation from './resources/navigation/Navigation';
+import Navigation from './resources/navigation/Navigation.tsx';
 import DataProvider from './resources/provider/DataProvider';
 
 export default function App() {

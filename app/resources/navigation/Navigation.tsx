@@ -47,13 +47,13 @@ export default function Navigation() {
     );
 }
 
-function getTabBarIcon(route) {
-    return ({ focused, color, size }) => {
-        return <TabBarIcons name={route.name} size={size + 8 + (focused ? 4 : 0)} color={color} />;
+function getTabBarIcon({ name }: { name: string }) {
+    return ({ focused, color, size }: { focused: boolean; color: string; size: number }) => {
+        return <TabBarIcons name={name} size={size + 8 + (focused ? 4 : 0)} color={color} />;
     };
 }
 
-function themeButton(color, onPress) {
+function themeButton(color: string, onPress: any) {
     // eslint-disable-next-line react-native/no-inline-styles
     return <ThemeSymbol style={{ marginRight: 10 }} size={40} color={color} onPress={onPress} />;
 }

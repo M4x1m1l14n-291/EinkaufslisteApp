@@ -14,6 +14,6 @@ export default function TabBarIcons({ name = '', size = 24, color = 'black' }) {
         case pagesKeys.essen:
             return <MealSymbol size={size} color={color} />;
         default:
-            return undefined;
+            return null;
     }
 }
