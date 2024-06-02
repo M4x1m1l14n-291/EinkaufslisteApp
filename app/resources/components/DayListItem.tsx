@@ -77,10 +77,10 @@ const styles = StyleSheet.create({
         alignContent: 'center',
     },
     items: {
-        marginBottom: 5,
+        margin: 2,
         paddingHorizontal: 10,
-        paddingVertical: 5,
-        borderWidth: 2,
+        borderLeftWidth: 2,
+        borderBottomWidth: 2,
         borderRadius: 5,
         flexDirection: 'row',
         alignItems: 'center',
