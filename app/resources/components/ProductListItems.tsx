@@ -36,7 +36,7 @@ type PropTypesSaved = {
 export function ListItemSaved({ item, theme, onDeletePress, onAddPress }: PropTypesSaved) {
     return (
         <View style={{ ...styles.items, borderColor: theme.text }}>
-            <DeleteSymbol size={35} color={theme.text} onPress={onDeletePress} />
+            <DeleteSymbol size={35} color={theme.text} onLongPress={onDeletePress} />
 
             <Text style={{ ...styles.itemText, color: theme.text }} allowFontScaling={false} numberOfLines={1}>
                 {` ${item.name}`}

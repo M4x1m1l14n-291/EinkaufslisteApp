@@ -141,7 +141,11 @@ export default function DataProvider({ children }: any) {
         try {
             const loadedData = await AsyncStorage.getItem(asyncStorageKeys.data);
             if (loadedData !== null) {
-                const newData: DataStructureType = JSON.parse(loadedData);
+                let newData: DataStructureType = JSON.parse(loadedData);
+                newData = {
+                    ...newData,
+                    meals: [...newData.meals.filter(v => new Date(v.day).getTime() >= new Date(today).getTime())],
+                };
                 setData(newData);
             }
         } catch (e) {

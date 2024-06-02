@@ -76,7 +76,17 @@ export default function Essensliste({ navigation }: { navigation: any }) {
                         style={styles.listContainer}
                         data={savedMeals}
                         renderItem={({ item }) => (
-                            <MealItem item={item} theme={theme} onLongPress={() => removeMeal(item.name)} />
+                            <MealItem
+                                item={item}
+                                theme={theme}
+                                onLongPress={() => removeMeal(item.name)}
+                                onPress={() => {
+                                    modifyDay({ name: item.name, day: selectedItem.day, products: item.products });
+                                    navigation.setOptions({ headerLeft: null });
+                                    setSelectedItem(emptyItem);
+                                    setDaysVisible(true);
+                                }}
+                            />
                         )}
                         ListFooterComponent={
                             <PlusSymbol
