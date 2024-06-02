@@ -164,6 +164,7 @@ const styles = StyleSheet.create({
     },
     addButton: {
         margin: 10,
+        marginBottom: 60,
         alignSelf: 'center',
     },
 });

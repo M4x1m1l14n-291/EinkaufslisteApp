@@ -16,8 +16,11 @@ type PropTypes = {
 export function ListItem({ item, theme, onPress }: PropTypes) {
     return (
         <View style={{ ...styles.items, borderColor: theme.text }}>
-            <Text style={{ ...styles.itemText, color: theme.text }} allowFontScaling={false} numberOfLines={1}>
+            <Text style={{ ...styles.number, color: theme.text }} allowFontScaling={false} numberOfLines={1}>
                 {item.amount > 0 && `${item.amount} | `}
+            </Text>
+
+            <Text style={{ ...styles.itemText, color: theme.text }} allowFontScaling={false} numberOfLines={1}>
                 {item.name}
             </Text>
 
@@ -56,6 +59,9 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         flexDirection: 'row',
         alignItems: 'center',
+    },
+    number: {
+        fontSize: 24,
     },
     itemText: {
         flex: 1,

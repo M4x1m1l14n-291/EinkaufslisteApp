@@ -42,6 +42,7 @@ export function AddItemModal({ visible, setVisible, addProduct, theme }: PropTyp
                         <TextInput
                             style={{ ...styles.textInput, color: theme.text, borderColor: theme.text }}
                             maxLength={30}
+                            autoFocus={true}
                             allowFontScaling={false}
                             onChangeText={setName}
                         />
