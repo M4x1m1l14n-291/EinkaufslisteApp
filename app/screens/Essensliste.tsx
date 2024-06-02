@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FlatList, StyleSheet } from 'react-native';
 
 import { AddChangeMealModal } from '../resources/components/AddChangeMealModal.tsx';
@@ -7,9 +7,9 @@ import { DayItem, MealItem } from '../resources/components/DayListItem.tsx';
 import ReturnArrowSymbol from '../resources/svg/ReturnArrowSymbol.tsx';
 import { ThemeContext } from '../resources/provider/ThemeProvider';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useFocusEffect } from '@react-navigation/native';
 import PlusSymbol from '../resources/svg/PlusSymbol.tsx';
 import ListSymbol from '../resources/svg/ListSymbol.tsx';
+import { pagesKeys } from '../resources/constants.tsx';
 
 const emptyItem: MealType = {
     name: '',
@@ -19,32 +19,49 @@ const emptyItem: MealType = {
 
 export default function Essensliste({ navigation }: { navigation: any }) {
     const { theme } = useContext(ThemeContext);
-    const { meals, savedMeals, addDay, modifyDay, addMeal, removeMeal } = useContext(DataContext);
+    const { meals, savedMeals, addDay, modifyDay, addMeal, removeSavedMeal } = useContext(DataContext);
 
     const [daysVisible, setDaysVisible] = useState(true);
     const [addMealVisible, setAddMealVisible] = useState(false);
     const [selectedItem, setSelectedItem] = useState(emptyItem);
 
-    function setBackButton() {
+    function switchToList() {
+        navigation.setOptions({ title: pagesKeys.gespeichert });
+        hideListButton();
+        showBackButton();
+        setDaysVisible(false);
+    }
+    function switchToDays() {
+        navigation.setOptions({ title: pagesKeys.essen });
+        hideBackButton();
+        showListButton();
+        setDaysVisible(true);
+    }
+
+    function showListButton() {
+        navigation.setOptions({ headerRight: () => listButton(theme.text, switchToList) });
+    }
+    function hideListButton() {
+        navigation.setOptions({ headerRight: null });
+    }
+
+    function showBackButton() {
         navigation.setOptions({
             headerLeft: () =>
                 returnButton(theme.text, () => {
-                    navigation.setOptions({ headerLeft: null });
-                    setSelectedItem(emptyItem);
-                    setDaysVisible(true);
+                    hideBackButton();
+                    switchToDays();
+                    showListButton();
                 }),
         });
     }
-    useFocusEffect(() =>
-        navigation.setOptions({
-            headerRight: () =>
-                listButton(theme.text, () => {
-                    navigation.setOptions({ headerLeft: null });
-                    setSelectedItem(emptyItem);
-                    setDaysVisible(!daysVisible);
-                }),
-        })
-    );
+    function hideBackButton() {
+        navigation.setOptions({ headerLeft: null });
+    }
+
+    useEffect(() => {
+        showListButton();
+    }, []);
 
     return (
         <SafeAreaView style={{ ...styles.container, backgroundColor: theme.background }}>
@@ -58,9 +75,9 @@ export default function Essensliste({ navigation }: { navigation: any }) {
                             item={item}
                             theme={theme}
                             onPressText={() => {
-                                setBackButton();
-                                setSelectedItem({ name: item.name, day: item.day, products: item.products });
-                                setDaysVisible(false);
+                                setSelectedItem(item);
+                                showBackButton();
+                                switchToList();
                             }}
                             onPressDelete={() => modifyDay({ name: '', day: item.day, products: [] })}
                         />
@@ -79,12 +96,11 @@ export default function Essensliste({ navigation }: { navigation: any }) {
                             <MealItem
                                 item={item}
                                 theme={theme}
-                                onLongPress={() => removeMeal(item.name)}
+                                onLongPress={() => removeSavedMeal(item.name)}
                                 onPress={() => {
                                     modifyDay({ name: item.name, day: selectedItem.day, products: item.products });
-                                    navigation.setOptions({ headerLeft: null });
                                     setSelectedItem(emptyItem);
-                                    setDaysVisible(true);
+                                    switchToDays();
                                 }}
                                 selectedMode={selectedItem.day.length > 0}
                             />
@@ -109,11 +125,11 @@ export default function Essensliste({ navigation }: { navigation: any }) {
                             addMeal({ name, products });
                         }}
                         setMeal={({ name, products }, day) => {
-                            modifyDay({ name, day, products });
+                            modifyDay({ name, day: day, products });
 
                             navigation.setOptions({ headerLeft: null });
                             setSelectedItem(emptyItem);
-                            setDaysVisible(!daysVisible);
+                            setDaysVisible(true);
                         }}
                     />
                 </>

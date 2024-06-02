@@ -51,11 +51,16 @@ export function AddChangeMealModal({ visible, setVisible, theme, selectedItem, a
                                 if (name.length > 0) {
                                     if (selectedItem.day.length > 0) {
                                         setMeal({ name, products }, selectedItem.day);
+                                        addMeal({ name, products });
+                                        setName('');
+                                        setProducts([]);
+                                        setVisible(false);
+                                    } else {
+                                        addMeal({ name, products });
+                                        setName('');
+                                        setProducts([]);
+                                        setVisible(false);
                                     }
-                                    addMeal({ name, products });
-                                    setName('');
-                                    setProducts([]);
-                                    setVisible(false);
                                 }
                             }}
                         />
