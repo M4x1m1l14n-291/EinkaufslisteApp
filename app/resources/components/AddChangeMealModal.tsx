@@ -4,18 +4,17 @@ import { Pressable, StyleSheet, TextInput, View } from 'react-native';
 import CrossSymbol from '../svg/CrossSymbol.tsx';
 import TickSymbol from '../svg/TickSymbol.tsx';
 import { ThemeType } from '../colors.tsx';
-import { MealType, SavedMealType } from '../provider/DataProvider.tsx';
+import { MealType } from '../provider/DataProvider.tsx';
 
 type PropTypes = {
     visible: boolean;
     setVisible: (state: boolean) => void;
     theme: ThemeType;
     selectedItem: MealType;
-    addMeal: ({ name, products }: SavedMealType) => void;
-    setMeal: ({ name, products }: SavedMealType, day: string) => void;
+    onDonePress: ({ name, day, products }: MealType) => void;
 };
 
-export function AddChangeMealModal({ visible, setVisible, theme, selectedItem, addMeal, setMeal }: PropTypes) {
+export function AddChangeMealModal({ visible, setVisible, theme, selectedItem, onDonePress }: PropTypes) {
     const [name, setName] = useState(selectedItem.name);
     const [products, setProducts] = useState(selectedItem.products);
 
@@ -49,18 +48,11 @@ export function AddChangeMealModal({ visible, setVisible, theme, selectedItem, a
                             color={theme.text}
                             onPress={() => {
                                 if (name.length > 0) {
-                                    if (selectedItem.day.length > 0) {
-                                        setMeal({ name, products }, selectedItem.day);
-                                        addMeal({ name, products });
-                                        setName('');
-                                        setProducts([]);
-                                        setVisible(false);
-                                    } else {
-                                        addMeal({ name, products });
-                                        setName('');
-                                        setProducts([]);
-                                        setVisible(false);
-                                    }
+                                    onDonePress({ name, day: selectedItem.day, products });
+
+                                    setName('');
+                                    setProducts([]);
+                                    setVisible(false);
                                 }
                             }}
                         />

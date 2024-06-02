@@ -121,15 +121,15 @@ export default function Essensliste({ navigation }: { navigation: any }) {
                         setVisible={setAddMealVisible}
                         theme={theme}
                         selectedItem={selectedItem}
-                        addMeal={({ name, products }) => {
-                            addMeal({ name, products });
-                        }}
-                        setMeal={({ name, products }, day) => {
-                            modifyDay({ name, day: day, products });
-
-                            navigation.setOptions({ headerLeft: null });
-                            setSelectedItem(emptyItem);
-                            setDaysVisible(true);
+                        onDonePress={({ name, day, products }) => {
+                            if (day.length > 0) {
+                                addMeal({ name, products });
+                                modifyDay({ name, day: selectedItem.day, products });
+                                setSelectedItem(emptyItem);
+                                switchToDays();
+                            } else {
+                                addMeal({ name, products });
+                            }
                         }}
                     />
                 </>
