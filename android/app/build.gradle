@@ -69,13 +69,13 @@ def enableProguardInReleaseBuilds = false
  */
 def jscFlavor = 'org.webkit:android-jsc:+'
 
-/*import groovy.json.*
+import groovy.json.*
 
 static def getPackageVersion() {
     def inputFile = new File("../package.json")
     def packageJson = new JsonSlurper().parseText(inputFile.text)
     return packageJson["version"]
-}*/
+}
 
 /* calculated from git commits to give sequential integers */
 static def getGitVersion() {
@@ -94,7 +94,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode getGitVersion()
-        versionName "0.0.4"
+        versionName getPackageVersion().toString()
         archivesBaseName = "Einkaufsliste-" + versionName
     }
     signingConfigs {
