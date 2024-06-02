@@ -86,6 +86,7 @@ export default function Essensliste({ navigation }: { navigation: any }) {
                                     setSelectedItem(emptyItem);
                                     setDaysVisible(true);
                                 }}
+                                selectedMode={selectedItem.day.length > 0}
                             />
                         )}
                         ListFooterComponent={

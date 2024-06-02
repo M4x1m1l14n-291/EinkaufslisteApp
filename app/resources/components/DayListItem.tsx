@@ -38,9 +38,10 @@ type PropTypesSaved = {
     theme: ThemeType;
     onLongPress: any;
     onPress: any;
+    selectedMode: boolean;
 };
 
-export function MealItem({ item, theme, onLongPress, onPress }: PropTypesSaved) {
+export function MealItem({ item, theme, onLongPress, onPress, selectedMode }: PropTypesSaved) {
     return (
         <View style={{ ...styles.items, borderColor: theme.text }}>
             <DeleteSymbol size={35} color={theme.text} onLongPress={onLongPress} />
@@ -48,8 +49,7 @@ export function MealItem({ item, theme, onLongPress, onPress }: PropTypesSaved) 
             <Text style={{ ...styles.name, color: theme.text }} allowFontScaling={false} numberOfLines={1}>
                 {` ${item.name}`}
             </Text>
-
-            <ReplyArrowSymbol size={35} color={theme.text} onPress={onPress} />
+            {selectedMode && <ReplyArrowSymbol size={35} color={theme.text} onPress={onPress} />}
         </View>
     );
 }
