@@ -25,6 +25,7 @@ export function AddChangeMealModal({ visible, setVisible, theme, selectedItem, o
                 <View style={{ ...styles.container, borderColor: theme.text, backgroundColor: theme.background }}>
                     <View style={styles.inputContainer}>
                         <TextInput
+                            autoFocus={true}
                             style={{ ...styles.textInput, color: theme.text, borderColor: theme.text }}
                             maxLength={30}
                             allowFontScaling={false}

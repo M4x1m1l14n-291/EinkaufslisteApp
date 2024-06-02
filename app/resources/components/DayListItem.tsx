@@ -6,6 +6,7 @@ import { ThemeType } from '../colors.tsx';
 import CrossSymbol from '../svg/CrossSymbol.tsx';
 import DeleteSymbol from '../svg/DeleteSymbol.tsx';
 import ReplyArrowSymbol from '../svg/ReplyArrowSymbol.tsx';
+import { dayNames } from '../constants.tsx';
 
 type PropTypes = {
     item: MealType;
@@ -15,15 +16,26 @@ type PropTypes = {
 };
 
 export function DayItem({ item, theme, onPressText, onPressDelete }: PropTypes) {
+    const day = dayNames[new Date(item.day).getDay()];
+
     return (
         <View style={{ ...styles.container, borderColor: theme.text }}>
-            <Text numberOfLines={1} style={{ ...styles.daysText, color: theme.text }}>
-                {item.day.substring(0, 3)}
+            <Text
+                numberOfLines={1}
+                allowFontScaling={false}
+                style={{ ...styles.daysText, width: day.length * 24, color: theme.text }}
+            >
+                {day}
             </Text>
-            <Text numberOfLines={1} style={{ ...styles.separator, color: theme.text }}>
+            <Text numberOfLines={1} allowFontScaling={false} style={{ ...styles.separator, color: theme.text }}>
                 |
             </Text>
-            <Text style={{ ...styles.name, color: theme.text }} onPress={onPressText}>
+            <Text
+                numberOfLines={1}
+                allowFontScaling={false}
+                style={{ ...styles.name, color: theme.text }}
+                onPress={onPressText}
+            >
                 {item.name.length > 0 ? item.name : '...'}
             </Text>
             {item.name.length > 0 && (
@@ -74,7 +86,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     daysText: {
-        width: '16%',
         paddingVertical: 10,
         paddingLeft: 10,
         fontSize: 24,

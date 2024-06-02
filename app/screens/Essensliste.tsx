@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { FlatList, StyleSheet } from 'react-native';
 
 import { AddChangeMealModal } from '../resources/components/AddChangeMealModal.tsx';
@@ -110,7 +110,9 @@ export default function Essensliste({ navigation }: { navigation: any }) {
                                 style={styles.addButton}
                                 size={55}
                                 color={theme.text}
-                                onPress={() => setAddMealVisible(true)}
+                                onPress={() => {
+                                    setAddMealVisible(true);
+                                }}
                             />
                         }
                     />

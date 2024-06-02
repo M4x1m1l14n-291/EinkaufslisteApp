@@ -14,3 +14,5 @@ export const pagesKeys = {
     essen: 'ESSEN',
     einstellungen: 'EINSTELLUNGEN',
 };
+
+export const dayNames = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
