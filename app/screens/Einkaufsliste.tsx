@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react';
-import { FlatList, StyleSheet } from 'react-native';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
+import { BackHandler, FlatList, StyleSheet } from 'react-native';
 
 import { ListItem, ListItemSaved } from '../resources/components/ProductListItems.tsx';
 import { AddItemModal } from '../resources/components/AddItemModal.tsx';
@@ -10,6 +10,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import PlusSymbol from '../resources/svg/PlusSymbol.tsx';
 import ListSymbol from '../resources/svg/ListSymbol.tsx';
 import { pagesKeys } from '../resources/constants.tsx';
+import ReturnArrowSymbol from '../resources/svg/ReturnArrowSymbol.tsx';
 
 export default function Einkaufsliste({ navigation }: { navigation: any }) {
     const { theme } = useContext(ThemeContext);
@@ -18,14 +19,59 @@ export default function Einkaufsliste({ navigation }: { navigation: any }) {
     const [productsListVisible, setProductsListVisible] = useState(true);
     const [addItemVisible, setAddItemVisible] = useState(false);
 
-    useFocusEffect(() =>
+    function switchToList() {
+        navigation.setOptions({ title: pagesKeys.gespeichert });
+        hideListButton();
+        showBackButton();
+        setProductsListVisible(false);
+    }
+    function switchToProducts() {
+        navigation.setOptions({ title: pagesKeys.einkaufen });
+        hideBackButton();
+        showListButton();
+        setProductsListVisible(true);
+    }
+
+    function showListButton() {
+        navigation.setOptions({ headerRight: () => listButton(theme.text, switchToList) });
+    }
+    function hideListButton() {
+        navigation.setOptions({ headerRight: null });
+    }
+
+    function showBackButton() {
         navigation.setOptions({
-            headerRight: () =>
-                listButton(theme.text, () => {
-                    navigation.setOptions({ title: productsListVisible ? pagesKeys.gespeichert : pagesKeys.einkaufen });
-                    setProductsListVisible(!productsListVisible);
+            headerLeft: () =>
+                returnButton(theme.text, () => {
+                    hideBackButton();
+                    switchToProducts();
+                    showListButton();
                 }),
-        })
+        });
+    }
+    function hideBackButton() {
+        navigation.setOptions({ headerLeft: null });
+    }
+
+    useEffect(() => {
+        showListButton();
+    }, []);
+
+    useFocusEffect(
+        useCallback(() => {
+            const onBackPress = () => {
+                if (!productsListVisible) {
+                    switchToProducts();
+                    return true;
+                } else {
+                    return false;
+                }
+            };
+
+            const subscription = BackHandler.addEventListener('hardwareBackPress', onBackPress);
+
+            return () => subscription.remove();
+        }, [productsListVisible])
     );
 
     return (
@@ -80,12 +126,19 @@ function listButton(color: string, onPress: any) {
     return <ListSymbol style={styles.listIcon} size={35} color={color} onPress={onPress} />;
 }
 
+function returnButton(color: string, onPress: any) {
+    return <ReturnArrowSymbol style={styles.returnIcon} size={40} color={color} onPress={onPress} />;
+}
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
     listIcon: {
         marginRight: 10,
+    },
+    returnIcon: {
+        marginLeft: 10,
     },
     listContainer: {
         padding: 5,
