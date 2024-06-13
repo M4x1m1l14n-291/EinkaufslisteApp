@@ -17,6 +17,7 @@ const emptyFunctions: EmptyFunctionsType = {
     modifyDay: () => {},
     addMeal: () => {},
     removeSavedMeal: () => {},
+    addModifyMeal: () => {},
 };
 
 type EmptyFunctionsType = {
@@ -27,6 +28,7 @@ type EmptyFunctionsType = {
     modifyDay: ({ name, day, products }: MealType) => void;
     addMeal: ({ name, products }: SavedMealType) => void;
     removeSavedMeal: (name: string) => void;
+    addModifyMeal: ({ name, day, products }: MealType) => void;
 };
 
 const today = new Date().toDateString();
@@ -119,6 +121,25 @@ export default function DataProvider({ children }: any) {
         setData(newData);
         saveDataToDisk(newData).then();
     }
+    function addModifyMeal({ name, day, products }: MealType) {
+        const modifiedDay: MealType = { ...data.meals.find(v => v.day === day)!, name, products };
+        const savedMeals = data.savedMeals.find(v => v.name === name)
+            ? data.savedMeals
+            : [...data.savedMeals, { name, products }].sort((a, b) => {
+                  return a.name.localeCompare(b.name);
+              });
+        const newData: DataStructureType = {
+            ...data,
+            meals: [...data.meals.filter(v => v.day !== day), modifiedDay].sort((a, b) => {
+                const aDate = new Date(a.day).getTime();
+                const bDate = new Date(b.day).getTime();
+                return aDate - bDate;
+            }),
+            savedMeals,
+        };
+        setData(newData);
+        saveDataToDisk(newData).then();
+    }
     function removeSavedMeal(name: string) {
         const savedMeals = data.savedMeals.filter(v => v.name !== name);
         const newData: DataStructureType = {
@@ -171,6 +192,7 @@ export default function DataProvider({ children }: any) {
             modifyDay,
             addMeal,
             removeSavedMeal,
+            addModifyMeal,
         };
     }, [data]);
 

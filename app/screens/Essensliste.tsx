@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FlatList, StyleSheet } from 'react-native';
 
 import { AddChangeMealModal } from '../resources/components/AddChangeMealModal.tsx';
@@ -19,7 +19,7 @@ const emptyItem: MealType = {
 
 export default function Essensliste({ navigation }: { navigation: any }) {
     const { theme } = useContext(ThemeContext);
-    const { meals, savedMeals, addDay, modifyDay, addMeal, removeSavedMeal } = useContext(DataContext);
+    const { meals, savedMeals, addDay, modifyDay, addMeal, addModifyMeal, removeSavedMeal } = useContext(DataContext);
 
     const [daysVisible, setDaysVisible] = useState(true);
     const [addMealVisible, setAddMealVisible] = useState(false);
@@ -124,9 +124,11 @@ export default function Essensliste({ navigation }: { navigation: any }) {
                         theme={theme}
                         selectedItem={selectedItem}
                         onDonePress={({ name, day, products }) => {
+                            console.log(name, day);
                             if (day.length > 0) {
-                                addMeal({ name, products });
-                                modifyDay({ name, day: selectedItem.day, products });
+                                addModifyMeal({ name, day, products });
+                                //addMeal({ name, products });
+                                //modifyDay({ name, day: selectedItem.day, products });
                                 setSelectedItem(emptyItem);
                                 switchToDays();
                             } else {

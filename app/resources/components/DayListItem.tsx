@@ -96,6 +96,7 @@ const styles = StyleSheet.create({
     },
     name: {
         flex: 1,
+        maxWidth: '70%',
         paddingRight: 10,
         paddingVertical: 10,
         fontSize: 24,
