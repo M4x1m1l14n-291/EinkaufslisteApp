@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { FlatList, StyleSheet } from 'react-native';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
+import { BackHandler, FlatList, StyleSheet } from 'react-native';
 
 import { AddChangeMealModal } from '../resources/components/AddChangeMealModal.tsx';
 import { DataContext, MealType } from '../resources/provider/DataProvider.tsx';
@@ -10,6 +10,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import PlusSymbol from '../resources/svg/PlusSymbol.tsx';
 import ListSymbol from '../resources/svg/ListSymbol.tsx';
 import { pagesKeys } from '../resources/constants.tsx';
+import { useFocusEffect } from '@react-navigation/native';
 
 const emptyItem: MealType = {
     name: '',
@@ -62,6 +63,23 @@ export default function Essensliste({ navigation }: { navigation: any }) {
     useEffect(() => {
         showListButton();
     }, []);
+
+    useFocusEffect(
+        useCallback(() => {
+            const onBackPress = () => {
+                if (!daysVisible) {
+                    switchToDays();
+                    return true;
+                } else {
+                    return false;
+                }
+            };
+
+            const subscription = BackHandler.addEventListener('hardwareBackPress', onBackPress);
+
+            return () => subscription.remove();
+        }, [daysVisible])
+    );
 
     return (
         <SafeAreaView style={{ ...styles.container, backgroundColor: theme.background }}>
