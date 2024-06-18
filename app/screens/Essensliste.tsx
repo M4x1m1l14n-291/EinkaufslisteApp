@@ -82,7 +82,7 @@ export default function Essensliste({ navigation }: { navigation: any }) {
     );
 
     return (
-        <SafeAreaView style={{ ...styles.container, backgroundColor: theme.background }}>
+        <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
             {daysVisible ? (
                 <FlatList
                     key={'days list'}

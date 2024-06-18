@@ -19,25 +19,26 @@ export function DayItem({ item, theme, onPressText, onPressDelete }: PropTypes) 
     const day = dayNames[new Date(item.day).getDay()];
 
     return (
-        <View style={{ ...styles.container, borderColor: theme.text }}>
+        <View style={[styles.container, { borderColor: theme.text }]}>
             <Text
                 numberOfLines={1}
                 allowFontScaling={false}
-                style={{ ...styles.daysText, width: day.length * 24, color: theme.text }}
+                style={[styles.daysText, { width: day.length * 24, color: theme.text }]}
             >
                 {day}
             </Text>
-            <Text numberOfLines={1} allowFontScaling={false} style={{ ...styles.separator, color: theme.text }}>
+            <Text numberOfLines={1} allowFontScaling={false} style={[styles.separator, { color: theme.text }]}>
                 |
             </Text>
             <Text
                 numberOfLines={1}
                 allowFontScaling={false}
-                style={{ ...styles.name, color: theme.text }}
+                style={[styles.name, { color: theme.text }]}
                 onPress={onPressText}
             >
                 {item.name.length > 0 ? item.name : '...'}
             </Text>
+
             {item.name.length > 0 && (
                 <CrossSymbol style={styles.delete} size={40} color={theme.text} onPress={onPressDelete} />
             )}
@@ -55,10 +56,10 @@ type PropTypesSaved = {
 
 export function MealItem({ item, theme, onLongPress, onPress, selectedMode }: PropTypesSaved) {
     return (
-        <View style={{ ...styles.items, borderColor: theme.text }}>
+        <View style={[styles.items, { borderColor: theme.text }]}>
             <DeleteSymbol size={35} color={theme.text} onLongPress={onLongPress} />
 
-            <Text style={{ ...styles.name, color: theme.text }} allowFontScaling={false} numberOfLines={1}>
+            <Text style={[styles.name, { color: theme.text }]} allowFontScaling={false} numberOfLines={1}>
                 {` ${item.name}`}
             </Text>
             {selectedMode && <ReplyArrowSymbol size={35} color={theme.text} onPress={onPress} />}
@@ -96,7 +97,6 @@ const styles = StyleSheet.create({
     },
     name: {
         flex: 1,
-        maxWidth: '70%',
         paddingRight: 10,
         paddingVertical: 10,
         fontSize: 24,

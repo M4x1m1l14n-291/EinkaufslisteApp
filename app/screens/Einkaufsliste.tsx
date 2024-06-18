@@ -75,7 +75,7 @@ export default function Einkaufsliste({ navigation }: { navigation: any }) {
     );
 
     return (
-        <SafeAreaView style={{ ...styles.container, backgroundColor: theme.background }}>
+        <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
             {productsListVisible ? (
                 <>
                     <FlatList
